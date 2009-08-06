@@ -14,6 +14,9 @@ SelectionOptionsFor
 # In that case, the reports will not have access to the display labels
 #
 
+# INSTALLATION 
+  [RAILS_ROOT]$ script/plugin install git://github.com/mwindholtz/selection_options_for.git
+
 class Article < ActiveRecord::Base
 
         selection_options_for :file_type_option,
