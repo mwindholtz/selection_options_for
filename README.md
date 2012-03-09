@@ -1,6 +1,8 @@
 # SelectionOptionsFor
 
-TODO: Write a gem description
+This code allows you to keep the display labels in the model 
+when the DB holds only a 1 character flag.
+and when the code requires symbolic references to the value to use in algorithms
 
 ## Installation
 
@@ -22,21 +24,20 @@ Or install it yourself as:
 SelectionOptionsFor
 ===================
 
-# This code allows you to keep the display labels in the model 
-# when the DB holds only a 1 character flag.
-# and when the code requires symbolic references to the value to use in algorithms
-#
-# element 0 of the array passed in is always the logical symbol
-# If a 2-element Array is passed in, [key, label] and the first letter of label is the DB value
-# If a 3-element Array is passed in, [key, DB value, label] 
-# Any other type passed in throws an error
-#
-# Limitations: Don't use this if you will run reports directly against the DB 
-# In that case, the reports will not have access to the display labels
-#
+ This code allows you to keep the display labels in the model 
+ when the DB holds only a 1 character flag.
+ and when the code requires symbolic references to the value to use in algorithms
+
+ element 0 of the array passed in is always the logical symbol
+ If a 2-element Array is passed in, [key, label] and the first letter of label is the DB value
+ If a 3-element Array is passed in, [key, DB value, label] 
+ Any other type passed in throws an error
+
+ Limitations: Don't use this if you will run reports directly against the DB 
+ In that case, the reports will not have access to the display labels
+
 
 class Article < ActiveRecord::Base
-
         selection_options_for :file_type_option,
            [:pdf,    'PDF'],
            [:html,   'HTML'],
@@ -49,38 +50,38 @@ adds the following CLASS METHODS to Article
 * file_type_options
   returns a array of 2-value arrays suitable to fill a select tag
   The second example shows how to start the selection on a blank
-  <%= select :article, :file_type_option, Article.file_type_options %>
-  <%= select :article, :file_type_option,  [['','']] + Article.file_type_options %>
+$  <%= select :article, :file_type_option, Article.file_type_options %>
+$  <%= select :article, :file_type_option,  [['','']] + Article.file_type_options %>
 
-  assert_equal  ["MS-Word", "PDF", "HTML"],   Article.file_type_option_hash.values
-  assert_equal "['MS-Word', 'PDF', 'HTML']",  Article.file_type_option_js_list
+$  assert_equal  ["MS-Word", "PDF", "HTML"],   Article.file_type_option_hash.values
+$  assert_equal "['MS-Word', 'PDF', 'HTML']",  Article.file_type_option_js_list
  
-* file_type_option_symbols
+$ file_type_option_symbols
   returns hash of symbols
 
 adds the following INSTANCE METHODS to Article
 
-* file_type_option_hash
-* file_type_option
+$ file_type_option_hash
+$ file_type_option
   returns the single character value as in the db
 
-* file_type_option_label
+$ file_type_option_label
   returns the current values label
 
-* file_type_option_symbol
+$ file_type_option_symbol
   returns the current values symbol
 
 methods ending in '?' return boolean if the value is set
 methods ending in '!' set the value
   
-* file_type_option_pdf?  
-* file_type_option_pdf! 
+$ file_type_option_pdf?  
+$ file_type_option_pdf! 
 
-* file_type_option_html?
-* file_type_option_html!
+$ file_type_option_html?
+$ file_type_option_html!
 
-* file_type_option_msword?
-* file_type_option_msword!
+$ file_type_option_msword?
+$ file_type_option_msword!
 
 example #1: Selection list
 
@@ -113,18 +114,16 @@ class Article < ActiveRecord::Base
      [:cc, 'R','Credit Card Account']
 end
 
- <%=  select :article, :payment_method_option, Article.payment_method_options %> 
+$ <%=  select :article, :payment_method_option, Article.payment_method_options %> 
 
 Example #2: Radio button labels
 
-  <% Article.payment_method_option_hash.each do | key, value | %>
-    <%=  radio_button :article, :payment_method_option, key %> <%= value %><br />
-  <% end %>
+$  <% Article.payment_method_option_hash.each do | key, value | %>
+$    <%=  radio_button :article, :payment_method_option, key %> <%= value %><br />
+$  <% end %>
 
 Example #3 in a java_script list
     payment_method_option_js_list
-
-
 
 
 ## Contributing
