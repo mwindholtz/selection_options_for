@@ -18,7 +18,7 @@ Gem::Specification.new do |gem|
    Limitations: Don't use this if you will run reports directly against the DB 
    In that case, the reports will not have access to the display labels    
   }
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/mwindholtz/selection_options_for"
 
   gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   gem.files         = `git ls-files`.split("\n")
