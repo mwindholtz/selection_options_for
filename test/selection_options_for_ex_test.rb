@@ -5,14 +5,8 @@ require 'test_helper'
 # test bad data and exceptions
 #
 
-class ModelUnderTest < ActiveRecord::Base
+class ModelUnderTest < SuperModel::Base
   extend ModelAdditions
-  def self.columns() @columns ||= []; end
-  def self.column(name, sql_type = nil, default = nil, null = true)
-    columns << ActiveRecord::ConnectionAdapters::Column.new(name.to_s, default, sql_type.to_s, null)
-  end
-
-  column :price_option,             :string
     
   begin  
     selection_options_for :price_option,

@@ -26,4 +26,6 @@ Gem::Specification.new do |gem|
   gem.name          = "selection_options_for"
   gem.require_paths = ["lib"]
   gem.version       = SelectionOptionsFor::VERSION
+  
+  gem.add_development_dependency "supermodel"
 end

@@ -5,14 +5,12 @@ module ModelAdditions
     id_hash = id + '_hash'
     id_symbols = id + '_symbols'
     class_eval <<-EOF
-      write_inheritable_attribute("#{id_hash}".to_sym, {})
-      write_inheritable_attribute("#{id_symbols}".to_sym, {})
-      def self.#{id_hash}()
-        read_inheritable_attribute("#{id_hash}".to_sym)
-      end
-      def self.#{id_symbols}()
-        read_inheritable_attribute("#{id_symbols}".to_sym)
-      end
+      class_attribute "#{id_hash}".to_sym
+      send("#{id_hash}=".to_sym, {})
+      
+      class_attribute "#{id_symbols}".to_sym
+      send("#{id_symbols}=".to_sym, {})             
+      
       def self.#{id}s   
         #{id_hash}.map { |key, value| [value,key] }.sort
       end

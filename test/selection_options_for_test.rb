@@ -9,26 +9,13 @@ require 'test_helper'
 # 3. SubClassOfModel -- should have it's own copy of class variables
 #
 
-class SiblingOfModelUnderTest < ActiveRecord::Base
+class SiblingOfModelUnderTest < SuperModel::Base
   extend ModelAdditions
-  
-  def self.columns() @columns ||= []; end
-  def self.column(name, sql_type = nil, default = nil, null = true)
-    columns << ActiveRecord::ConnectionAdapters::Column.new(name.to_s, default, sql_type.to_s, null)
-  end
 end
 
-class ModelUnderTest < ActiveRecord::Base
+class ModelUnderTest < SuperModel::Base
   extend ModelAdditions
-  
-  def self.columns() @columns ||= []; end
-  def self.column(name, sql_type = nil, default = nil, null = true)
-    columns << ActiveRecord::ConnectionAdapters::Column.new(name.to_s, default, sql_type.to_s, null)
-  end
-
-  column :status_option,            :string
-  column :payment_method_option,    :string
-    
+      
   selection_options_for :status_option,
             [:partial,             'Partial Registration'],
             [:active,              'Active'],
@@ -98,18 +85,8 @@ class SelectionOptionsForTest < Test::Unit::TestCase
     assert !target.status_option_partial?
   end
 
-  def test_sibling_of_target_not_effected_by_calss_methods
+  def test_sibling_of_target_not_effected_by_class_methods
       SiblingOfModelUnderTest.payment_method_options
-      flunk "Should throw Exception" 
-      rescue NoMethodError => ex
-         assert true
-      rescue
-        flunk "wrong exception thrown"
-  end
-
-  def test_sibling_of_target_not_effected_by_instance_methods
-      sib = SiblingOfModelUnderTest.new
-      sib.status_option_partial?
       flunk "Should throw Exception" 
       rescue NoMethodError => ex
          assert true
