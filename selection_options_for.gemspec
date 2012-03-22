@@ -28,4 +28,6 @@ Gem::Specification.new do |gem|
   gem.version       = SelectionOptionsFor::VERSION
   
   gem.add_development_dependency "supermodel"
+  gem.add_runtime_dependency     "activerecord"
 end
+
