@@ -1,4 +1,4 @@
-## ruby -Itest test/selection_options_for_ex_test.rb
+## ruby -Itest -Ilib test/selection_options_for_ex_test.rb
 require 'test_helper'
 
 #
