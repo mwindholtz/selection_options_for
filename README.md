@@ -4,6 +4,11 @@ This code allows you to keep the display labels in the model
 when the DB holds only a 1 character flag.
 and when the code requires symbolic references to the value to use in algorithms
 
+## Note
+Please see also the new 'state_objects' Gem
+StateObjects also supports behavior changes based on state and reduces conditional logic.
+https://github.com/mwindholtz/state_objects
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -26,8 +31,8 @@ Or install it yourself as:
  and when the code requires symbolic references to the value to use in algorithms
 
 * element 0 of the array passed in is always the logical symbol
-* If a 2-element Array is passed in, [key, label] and the first letter of label is the DB value
-* If a 3-element Array is passed in, [key, DB value, label] 
+* 3-element Array is passed in, [key, DB value, label] 
+* Removed: (2-element Array.  This is no longer supported)
 * Any other type passed in throws an error
 
 ## Limitations: 
@@ -37,9 +42,9 @@ Or install it yourself as:
  
     class Article < ActiveRecord::Base
             selection_options_for :file_type_option,
-               [:pdf,    'PDF'],
-               [:html,   'HTML'],
-               [:msword, 'MS-Word']
+               [:pdf,    'P', 'PDF'],
+               [:html,   'H', 'HTML'],
+               [:msword, 'M', 'MS-Word']
                [:text,   'X', 'Textfile']
     end
     
@@ -105,13 +110,11 @@ In the example below 'R' is stored in the database when
 
     class Article < ActiveRecord::Base
      selection_options_for :payment_method_option,
-         [:basic,  'Basic'],
-         [:cash,   'Cash Account'],
-         [:cc, 'R','Credit Card Account']
+         [:basic, 'B', 'Basic'],
+         [:cash,  'C', 'Cash Account'],
+         [:cc,    'R','Credit Card Account']
     end
     
-
-
     <%=  select :article, :payment_method_option, Article.payment_method_options %> 
     
 
@@ -124,7 +127,6 @@ In the example below 'R' is stored in the database when
 
 ### Example #4 in a java_script list
 
-    
     payment_method_option_js_list
     
 
