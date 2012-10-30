@@ -1,3 +1,3 @@
 module SelectionOptionsFor
-  VERSION = "0.0.8"  unless defined? SelectionOptionsFor::VERSION
+  VERSION = "0.0.9"  unless defined? SelectionOptionsFor::VERSION
 end

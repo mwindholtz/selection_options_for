@@ -10,11 +10,9 @@ Gem::Specification.new do |gem|
    when the DB holds only a 1 character flag.
    and when the code requires symbolic references to the value to use in algorithms
    
-   element 0 of the array passed in is always the logical symbol
-   If a 2-element Array is passed in, [key, label] and the first letter of label is the DB value
-   If a 3-element Array is passed in, [key, DB value, label] 
-   Any other type passed in throws an error
-   
+   This gem is superceded by the gem state_objects
+   Please migrate to: https://rubygems.org/gems/state_objects
+       
    Limitations: Don't use this if you will run reports directly against the DB 
    In that case, the reports will not have access to the display labels    
   }

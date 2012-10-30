@@ -1,3 +1,5 @@
+## v0.0.9
+  Recommend that you move to https://rubygems.org/gems/state_objects
 ## v0.0.8
 ## v0.0.7
 * updated the tests
