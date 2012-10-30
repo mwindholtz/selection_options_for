@@ -1,4 +1,4 @@
-## ruby -Itest test/selection_options_for_test.rb
+## ruby -Itest -Ilib test/selection_options_for_test.rb
 require 'test_helper'
 
 #
@@ -10,23 +10,23 @@ require 'test_helper'
 #
 
 class SiblingOfModelUnderTest < SuperModel::Base
-  extend ModelAdditions
+  extend SelectionOptionsFor::ModelAdditions
 end
 
 class ModelUnderTest < SuperModel::Base
-  extend ModelAdditions
+  extend SelectionOptionsFor::ModelAdditions
       
   selection_options_for :status_option,
-            [:partial,             'Partial Registration'],
-            [:active,              'Active'],
+            [:partial,        'P', 'Partial Registration'],
+            [:active,         'A', 'Active'],
             [:changing_email, 'E', 'Active, Changing Email'],  
-            [:inactive,            'Inactive'],
+            [:inactive,       'I',  'Inactive'],
             [:forgot_pw,      'F', 'Active, Forgot Password' ]
 
   selection_options_for :payment_method_option,
-            [:basic,    'Basic'],
-            [:cash,     'Cash Account'],
-            [:cc,   'R','Credit Card Account']
+            [:basic, 'B', 'Basic'],
+            [:cash,  'C',  'Cash Account'],
+            [:cc,    'R', 'Credit Card Account']
             
   selection_options_for :sorted_option,
             [:none,         'H', 'Honorary Member'],
@@ -39,8 +39,8 @@ class ModelUnderTest < SuperModel::Base
 
 class SubClassOfModel < ModelUnderTest
   selection_options_for :payment_method_option,
-            [:advanced, 'Advanced'],
-            [:ecash,    'ECash Account']
+            [:advanced, 'A', 'Advanced'],
+            [:ecash,    'E', 'ECash Account']
 end
 
 class SelectionOptionsForTest < Test::Unit::TestCase
@@ -49,7 +49,7 @@ class SelectionOptionsForTest < Test::Unit::TestCase
   end  
 
   def test_should_provide_symbols
-    expected = {"Basic"=>:basic, "Cash Account"=>:cash, "R"=>:cc}
+    expected = {"B"=>:basic, "C"=>:cash, "R"=>:cc}
     assert_equal expected, ModelUnderTest.payment_method_option_symbols
   end
 
@@ -94,40 +94,35 @@ class SelectionOptionsForTest < Test::Unit::TestCase
         flunk "wrong exception thrown"
   end
 
-  def test_each_subclass_has_own_symbols
-    
-    assert_equal [["Advanced", "Advanced"], ["ECash Account", "ECash Account"]].sort ,
+  def test_each_subclass_has_own_symbols    
+    assert_equal [["Advanced", "A"], ["ECash Account", "E"]] ,
                   SubClassOfModel.payment_method_options.sort 
   end
 
   def test_payment_method_option_array
-    
-    assert_equal [["Basic", "Basic"],
-                  ["Cash Account", "Cash Account"],
-                  ["Credit Card Account", "R"]].sort ,  
-                @model.payment_method_options.sort 
+    assert_equal [["Basic", "B"], ["Cash Account", "C"], ["Credit Card Account", "R"]],
+                  @model.payment_method_options.sort 
   end
 
   def test_default_status
     target =  @model.new
     target.status_option_forgot_pw!
     assert_equal 'Active, Forgot Password', target.status_option_label
-    target.status_option = 'Active'
+    target.status_option = 'A'
     assert_equal 'Active', target.status_option_label
   end
 
-  def test_status_option_array
-    
-    assert_equal [["Active", "Active"],
+  def test_status_option_array    
+    assert_equal [["Active", 'A'],
      ["Active, Changing Email", "E"],
      ["Active, Forgot Password", "F"],
-     ["Inactive", "Inactive"],
-     ["Partial Registration", "Partial Registration"]].sort ,  
+     ["Inactive", "I"],
+     ["Partial Registration", 'P']].sort ,  
      @model.status_options.sort    
   end
 
   def test_default_payment_method_option_hash
-    expected = {"Cash Account"=>"Cash Account", "R"=>"Credit Card Account", "Basic"=>"Basic"}
+    expected = {"B"=>"Basic", "C"=>"Cash Account", "R"=>"Credit Card Account"}
     assert_equal expected, @model.payment_method_option_hash
   end
   

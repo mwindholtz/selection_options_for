@@ -35,7 +35,7 @@ module SelectionOptionsFor
         end          
         case label.size
         when 2
-          letter, display_text = label[1].first,  label[1]
+          raise "Invalid number of items. 2 part definition is no longer supported.  Add the middle value for storage in the DB."
         when 3
           letter, display_text = label[1], label[2]
         else
